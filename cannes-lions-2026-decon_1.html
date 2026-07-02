@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cannes Lions 2026 — アワードデコン・ダッシュボード</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F5F4F0;--surface:#fff;--surface-2:#EDECE7;--border:rgba(0,0,0,.08);--border-strong:rgba(0,0,0,.15);--text-primary:#1A1917;--text-secondary:#5A5955;--text-muted:#8F8D88;--radius:8px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans JP','Inter',sans-serif;background:var(--bg);color:var(--text-primary);font-size:14px;line-height:1.7;}
+a{color:inherit;text-decoration:none;}
+
+.header{background:#111;color:#fff;padding:2rem 2rem 1.75rem;}
+.header-inner{max-width:1120px;margin:0 auto;}
+.header-eye{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:.4rem;}
+.header h1{font-size:clamp(20px,3.5vw,30px);font-weight:700;letter-spacing:-.02em;line-height:1.2;margin-bottom:.35rem;}
+.header-sub{font-size:12px;color:rgba(255,255,255,.45);}
+
+.main{max-width:1120px;margin:0 auto;padding:1.75rem 1.5rem 4rem;}
+.section-label{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.85rem;}
+hr{border:none;border-top:.5px solid var(--border);margin:1.75rem 0;}
+
+/* pattern chips */
+.pattern-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;margin-bottom:1.75rem;}
+.pattern-chip{border-radius:var(--radius);padding:.85rem 1rem;cursor:pointer;border:1.5px solid transparent;transition:all .15s;}
+.pattern-chip:hover{filter:brightness(.96);}
+.pattern-chip.selected{border-color:#111;}
+.pc-label{font-size:12px;font-weight:600;margin-bottom:3px;}
+.pc-desc{font-size:11px;line-height:1.45;opacity:.8;}
+.pc-count{font-size:22px;font-weight:700;margin-bottom:2px;}
+.pc-bar-wrap{height:4px;background:rgba(0,0,0,.12);border-radius:2px;margin-top:6px;}
+.pc-bar{height:4px;border-radius:2px;background:rgba(0,0,0,.35);}
+.p-subvert{background:#EEEDFE;color:#3C3489;}
+.p-hijack{background:#E1F5EE;color:#085041;}
+.p-tension{background:#FAEEDA;color:#633806;}
+.p-system{background:#E6F1FB;color:#0C447C;}
+.p-proof{background:#FAECE7;color:#712B13;}
+.p-inversion{background:#EAF3DE;color:#27500A;}
+.p-participation{background:#FCEBEB;color:#791F1F;}
+.p-narrative{background:#F1EFE8;color:#444441;}
+
+/* filter bars */
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1rem;align-items:center;}
+.filter-btn{font-size:12px;font-family:inherit;padding:5px 13px;border-radius:20px;border:.5px solid var(--border-strong);background:var(--surface);color:var(--text-secondary);cursor:pointer;transition:all .15s;}
+.filter-btn:hover{background:var(--surface-2);}
+.filter-btn.active{background:#111;color:#fff;border-color:#111;}
+.filter-btn.dept-active{background:#534AB7;color:#fff;border-color:#534AB7;}
+.result-count{font-size:12px;color:var(--text-muted);margin-left:auto;}
+
+/* dept pills */
+.dept-bar{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:1rem;}
+.dept-btn{font-size:11px;font-family:inherit;padding:4px 11px;border-radius:20px;border:.5px solid var(--border-strong);background:var(--surface);color:var(--text-secondary);cursor:pointer;transition:all .15s;}
+.dept-btn:hover{background:var(--surface-2);}
+.dept-btn.active{background:#534AB7;color:#fff;border-color:#534AB7;}
+
+/* cards */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:.7rem;}
+.card{background:var(--surface);border:.5px solid var(--border);border-radius:12px;padding:1.1rem 1.25rem;display:flex;flex-direction:column;transition:border-color .15s;}
+.card:hover{border-color:var(--border-strong);}
+.card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:.5rem;}
+.badges{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:.5rem;}
+.card-award{font-size:10px;font-weight:600;letter-spacing:.07em;padding:2px 8px;border-radius:10px;white-space:nowrap;}
+.award-gp{background:#111;color:#fff;}
+.award-titan{background:#2C2C2A;color:#FAD862;}
+.award-gold{background:#F5C84C;color:#3A2E00;}
+.award-silver{background:#D4D2CA;color:#2C2C2A;}
+.award-bronze{background:#D4916A;color:#fff;}
+.dept-badge{font-size:10px;font-weight:500;padding:2px 7px;border-radius:10px;background:#EEEDFE;color:#534AB7;white-space:nowrap;}
+.card-title{font-size:14px;font-weight:600;color:var(--text-primary);line-height:1.35;margin-bottom:2px;}
+.card-brand{font-size:12px;color:var(--text-secondary);margin-bottom:.5rem;}
+.pattern-tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;padding:2px 9px;border-radius:20px;margin-bottom:.6rem;}
+.lbl{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text-muted);margin-bottom:3px;margin-top:.55rem;}
+.txt{font-size:12px;color:var(--text-primary);line-height:1.6;}
+.txt-muted{font-size:12px;color:var(--text-secondary);line-height:1.6;}
+.hidden{display:none!important;}
+
+/* insight */
+.insight-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:1rem;}
+.insight-card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--radius);padding:.9rem 1.1rem;}
+.insight-head{font-size:13px;font-weight:600;margin-bottom:4px;}
+.insight-body{font-size:12px;color:var(--text-secondary);line-height:1.55;}
+
+.footer{text-align:center;font-size:11px;color:var(--text-muted);padding-top:1rem;}
+@media(max-width:600px){.header{padding:1.5rem 1rem 1.25rem;}.main{padding:1.25rem 1rem 3rem;}.cards-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="header-eye">Cannes Lions 2026 · Award Decon</div>
+    <h1>🦁 アワード デコン ダッシュボード<br><span style="font-size:.65em;font-weight:400;opacity:.6;">受賞作のアイデア構造 × クリエイティブ手法パターン分類</span></h1>
+    <div class="header-sub">Grand Prix 34作品 + 全受賞（Bronze含む）— 特集6部門完全網羅：Creative Strategy / Creative Data / Creative B2B / Creative Business Transformation / Innovation / Titanium</div>
+  </div>
+</header>
+
+<main class="main">
+
+  <div class="section-label">クリエイティブ手法パターン — クリックで絞り込み</div>
+  <div class="pattern-grid" id="pattern-grid">
+    <div class="pattern-chip p-subvert" data-pattern="subvert" onclick="togglePattern('subvert',this)">
+      <div class="pc-count" id="cnt-subvert">0</div>
+      <div class="pc-label">🔄 常識の転覆</div>
+      <div class="pc-desc">業界・社会の前提を逆手に取り、逆説的立場でメッセージを放つ</div>
+      <div class="pc-bar-wrap"><div class="pc-bar" id="bar-subvert"></div></div>
+    </div>
+    <div class="pattern-chip p-hijack" data-pattern="hijack" onclick="togglePattern('hijack',this)">
+      <div class="pc-count" id="cnt-hijack">0</div>
+      <div class="pc-label">⚡ 文脈のハイジャック</div>
+      <div class="pc-desc">すでに動いている文化・行動・インフラを乗っ取って意味を上書きする</div>
+      <div class="pc-bar-wrap"><div class="pc-bar" id="bar-hijack"></div></div>
+    </div>
+    <div class="pattern-chip p-tension" data-pattern="tension" onclick="togglePattern('tension',this)">
+      <div class="pc-count" id="cnt-tension">0</div>
+      <div class="pc-label">⚔️ 矛盾・緊張の可視化</div>
+      <div class="pc-desc">社会や業界内部の矛盾を晒し、それ自体をアイデアの核にする</div>
+      <div class="pc-bar-wrap"><div class="pc-bar" id="bar-tension"></div></div>
+    </div>
+    <div class="pattern-chip p-system" data-pattern="system" onclick="togglePattern('system',this)">
+      <div class="pc-count" id="cnt-system">0</div>
+      <div class="pc-label">🔧 システム・インフラ化</div>
+      <div class="pc-desc">製品・政策・インフラそのものを変えて広告を超えたインパクトを生む</div>
+      <div class="pc-bar-wrap"><div class="pc-bar" id="bar-system"></div></div>
+    </div>
+    <div class="pattern-chip p-proof" data-pattern="proof" onclick="togglePattern('proof',this)">
+      <div class="pc-count" id="cnt-proof">0</div>
+      <div class="pc-label">📊 主張の実証・証明</div>
+      <div class="pc-desc">ブランドの約束を「やってみせる」ことで信頼と話題を同時に獲得する</div>
+      <div class="pc-bar-wrap"><div class="pc-bar" id="bar-proof"></div></div>
+    </div>
+    <div class="pattern-chip p-inversion" data-pattern="inversion" onclick="togglePattern('inversion',this)">
+      <div class="pc-count" id="cnt-inversion">0</div>
+      <div class="pc-label">🔃 視点の反転</div>
+      <div class="pc-desc">語り手・受け手・対象を入れ替えて見慣れたものを新鮮に見せる</div>
+      <div class="pc-bar-wrap"><div class="pc-bar" id="bar-inversion"></div></div>
+    </div>
+    <div class="pattern-chip p-participation" data-pattern="participation" onclick="togglePattern('participation',this)">
+      <div class="pc-count" id="cnt-participation">0</div>
+      <div class="pc-label">🤝 参加設計</div>
+      <div class="pc-desc">生活者の行動・投票・生成をキャンペーン本体に組み込む仕掛け</div>
+      <div class="pc-bar-wrap"><div class="pc-bar" id="bar-participation"></div></div>
+    </div>
+    <div class="pattern-chip p-narrative" data-pattern="narrative" onclick="togglePattern('narrative',this)">
+      <div class="pc-count" id="cnt-narrative">0</div>
+      <div class="pc-label">📖 物語・感情の直撃</div>
+      <div class="pc-desc">ドキュメンタリー・実話・感情的フックで圧倒的共感を生む</div>
+      <div class="pc-bar-wrap"><div class="pc-bar" id="bar-narrative"></div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="controls">
+    <div style="display:flex;flex-wrap:wrap;gap:6px;">
+      <button class="filter-btn active" onclick="filterAward('all',this)">すべて</button>
+      <button class="filter-btn" onclick="filterAward('gp',this)">Grand Prix</button>
+      <button class="filter-btn" onclick="filterAward('titan',this)">Titanium</button>
+      <button class="filter-btn" onclick="filterAward('gold',this)">Gold</button>
+      <button class="filter-btn" onclick="filterAward('silver',this)">Silver</button>
+      <button class="filter-btn" onclick="filterAward('bronze',this)">Bronze</button>
+    </div>
+    <div id="result-count" class="result-count"></div>
+  </div>
+
+  <div class="section-label" style="margin-bottom:.6rem;">部門で絞り込む</div>
+  <div class="dept-bar">
+    <button class="dept-btn active" onclick="filterDept('all',this)">全部門</button>
+    <button class="dept-btn" onclick="filterDept('creative-strategy',this)">Creative Strategy</button>
+    <button class="dept-btn" onclick="filterDept('creative-data',this)">Creative Data</button>
+    <button class="dept-btn" onclick="filterDept('creative-b2b',this)">Creative B2B</button>
+    <button class="dept-btn" onclick="filterDept('creative-business',this)">Creative Business Transformation</button>
+    <button class="dept-btn" onclick="filterDept('innovation',this)">Innovation</button>
+    <button class="dept-btn" onclick="filterDept('titanium',this)">Titanium</button>
+    <button class="dept-btn" onclick="filterDept('other',this)">その他部門</button>
+  </div>
+
+  <div class="cards-grid" id="cards">
+
+<!-- ===================== TITANIUM ===================== -->
+
+<div class="card" data-award="titan" data-pattern="system" data-dept="titanium">
+  <div class="badges"><span class="card-award award-titan">Titanium GP</span><span class="dept-badge">Titanium</span></div>
+  <div class="card-title">Haven</div>
+  <div class="card-brand">Suncorp Insurance · Leo Australia</div>
+  <span class="pattern-tag p-system">🔧 システム・インフラ化</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">保険会社が「補償」から「予防」に軸を転換し、気候データ・地域リスクを統合したデジタル防災プラットフォームを開発。TV・OOH・SNSすべてが「Haven」へのオンボーディング導線として機能。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">広告ではなくビジネスモデルと製品が変わっている。「受動的カテゴリー（保険）」を「能動的ライフ管理」へ再定義した構造的変革がTitanium審査基準に完全合致。</div>
+</div>
+
+<div class="card" data-award="titan" data-pattern="participation" data-dept="titanium">
+  <div class="badges"><span class="card-award award-titan">Titanium</span><span class="dept-badge">Titanium</span></div>
+  <div class="card-title">Oreo Cows</div>
+  <div class="card-brand">Oreo · VML New York + Mexico City</div>
+  <span class="pattern-tag p-participation">🤝 参加設計</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">「Oreoを牛に食べさせたら牛乳が変わるか？」という荒唐無稽な実験をSNS上で公開。農家・消費者・メディアを巻き込み、Brand Experience Gold・Creative Commerce Silverも獲得。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">製品特性（牛乳との相性）をそのままネタにした完璧な文脈一致。「やってみた」実証フォーマットが好奇心と拡散を同時に誘発し、購買直結まで設計。</div>
+</div>
+
+<div class="card" data-award="titan" data-pattern="narrative" data-dept="titanium">
+  <div class="badges"><span class="card-award award-titan">Titanium</span><span class="dept-badge">Titanium</span></div>
+  <div class="card-title">The Legacy of Virginia Giuffre</div>
+  <div class="card-brand">Virginia Giuffre · Dini von Mueffling Communications</div>
+  <span class="pattern-tag p-narrative">📖 物語・感情の直撃</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">性的虐待被害者の遺言「回顧録を必ず出版してほしい」を核に据えたアドボカシーキャンペーン。NYTベストセラー1位後、没後1年の追悼集会で第二波を設計。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">アドボカシーとパブリシティが一体化。「人の物語」が核にあり、PRのすべての手法が感情的文脈に奉仕している構造が際立つ。</div>
+</div>
+
+<div class="card" data-award="titan" data-pattern="proof" data-dept="titanium">
+  <div class="badges"><span class="card-award award-titan">Titanium</span><span class="dept-badge">Titanium</span></div>
+  <div class="card-title">Expedition Impossible</div>
+  <div class="card-brand">Columbia Sportswear · Adam&Eve\TBWA London</div>
+  <span class="pattern-tag p-proof">📊 主張の実証・証明</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">「世界の果てまで行ける耐久性」を証明するため、地球平面論者に「地球の端を証明できたら全財産を譲渡する」と宣言。Brand Experience & Activation GPも同時受賞。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">「証明不可能な主張」を「証明できなければブランドの勝ち」という逆賭けに転換。炎上リスクを取ることでブランド哲学を最もリアルに体現。</div>
+</div>
+
+<!-- ===================== INNOVATION ===================== -->
+
+<div class="card" data-award="gp" data-pattern="inversion" data-dept="innovation">
+  <div class="badges"><span class="card-award award-gp">GP</span><span class="dept-badge">Innovation</span></div>
+  <div class="card-title">Supernova Adaptive</div>
+  <div class="card-brand">adidas · TBWA\Canada, Toronto</div>
+  <span class="pattern-tag p-inversion">🔃 視点の反転</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">ダウン症の人々のために、通常のシューズ開発プロセスを逆転して設計したランニングシューズ。「アダプティブ＝制限への対応」から「アダプティブ＝可能性の拡張」へ再定義。Design Goldも同時受賞。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">「Proof of Concept → Proof of Change」という新審査基準に完全合致。製品自体が社会変革の証拠であり、広告は不要という最高のイノベーション構造。</div>
+</div>
+
+<div class="card" data-award="gold" data-pattern="system" data-dept="innovation">
+  <div class="badges"><span class="card-award award-gold">Gold</span><span class="dept-badge">Innovation</span></div>
+  <div class="card-title">Utrecht Energized（スマート充電網）</div>
+  <div class="card-brand">Renault · Publicis Amsterdam</div>
+  <span class="pattern-tag p-system">🔧 システム・インフラ化</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">ユトレヒト市で、Renault EVオーナーの車をV2G（Vehicle to Grid）で接続し、余剰電力を都市のスマートグリッドへ供給するインフラを構築。EVが「動く発電所」になるモデル。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">製品（EV）の新しい価値軸を「環境貢献のインフラ」として実装。ブランド約束をモビリティの枠を超えたエネルギーシステムとして可視化した点が革新的。</div>
+</div>
+
+<div class="card" data-award="silver" data-pattern="narrative" data-dept="innovation">
+  <div class="badges"><span class="card-award award-silver">Silver</span><span class="dept-badge">Innovation</span></div>
+  <div class="card-title">Radio Time Machine</div>
+  <div class="card-brand">Nichii Gakkan · TBWA\Hakuhodo, Tokyo</div>
+  <span class="pattern-tag p-narrative">📖 物語・感情の直撃</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">認知症ケアのため、患者の記憶が鮮明な時代の音楽をAIが自動選曲して流すラジオデバイスを開発。「回想法」をテクノロジーで民主化したプロダクトイノベーション。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">音楽と記憶の科学的接続を製品に落とし込み、ケア現場での「人間らしさの回復」を実現。AIを感情的フックとして使った珍しい成功例。</div>
+</div>
+
+<div class="card" data-award="silver" data-pattern="tension" data-dept="innovation">
+  <div class="badges"><span class="card-award award-silver">Silver</span><span class="dept-badge">Innovation</span></div>
+  <div class="card-title">Code for the Protection of Black Consumers</div>
+  <div class="card-brand">L'Oréal Luxe · Beta Collective, São Paulo</div>
+  <span class="pattern-tag p-tension">⚔️ 矛盾・緊張の可視化</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">ブラジルの消費者法に黒人消費者を差別から守る条項が存在しないという構造的矛盾を発見し、ブランドが自主的な「消費者保護コード」を立法提案として策定・公表。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">法的空白を「ブランドが埋める」という前例のない手法。社会課題に対して「啓発」ではなく「制度変更の提案」で応じた点が審査員の評価を集めた。</div>
+</div>
+
+<div class="card" data-award="bronze" data-pattern="system" data-dept="innovation">
+  <div class="badges"><span class="card-award award-bronze">Bronze</span><span class="dept-badge">Innovation</span></div>
+  <div class="card-title">SOS POS（Innovation Bronze）</div>
+  <div class="card-brand">BCP Bank · Circus Grey, Lima</div>
+  <span class="pattern-tag p-system">🔧 システム・インフラ化</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">既存のPOS端末を「盗難後の緊急口座凍結窓口」として活用。新インフラ不要でペルーの盗難・不正引き出し問題を解決（Creative Data GPも受賞）。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">データ（盗難統計）からアイデアが生まれ、既存ネットワーク（POS）を再利用するビジネス的合理性がInnovationとCreative Data両方で評価。</div>
+</div>
+
+<div class="card" data-award="bronze" data-pattern="subvert" data-dept="innovation">
+  <div class="badges"><span class="card-award award-bronze">Bronze</span><span class="dept-badge">Innovation</span></div>
+  <div class="card-title">T-Rex Leather（Innovation Bronze）</div>
+  <div class="card-brand">Lab-Grown Leather · VML Paris</div>
+  <span class="pattern-tag p-subvert">🔄 常識の転覆</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">ティラノサウルスのコラーゲンDNAから培養した「恐竜レザー」の試作バッグを制作・PR展開。「動物を殺さない皮革」の概念を極端な形で実証し、ラボグロウンレザー産業全体の認知を押し上げた。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">「絶滅動物のDNA＝クルエルティフリー」という逆説が強烈なメディアフック。PR Gold・Creative B2B Bronzeも受賞した多部門型アイデア。</div>
+</div>
+
+<!-- ===================== CREATIVE STRATEGY ===================== -->
+
+<div class="card" data-award="gp" data-pattern="narrative" data-dept="creative-strategy">
+  <div class="badges"><span class="card-award award-gp">GP</span><span class="dept-badge">Creative Strategy</span></div>
+  <div class="card-title">The Pub That Refused to Die</div>
+  <div class="card-brand">Heineken · LePub Milan + Publicis Dublin</div>
+  <span class="pattern-tag p-narrative">📖 物語・感情の直撃</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">廃業寸前のアイルランドの村の最後のパブを26人の村民が資金を出し合って買い取り復活させた実話をドキュメンタリー化。Heineken自身が「パブ文化の守護者」として動き、それを記録した。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">「ブランドが語る」でなく「ブランドが動いて、記録する」という構造。長期ブランド戦略（パブ文化との紐付け）が単一キャンペーンを超えた文化的正当性を生んだ。</div>
+</div>
+
+<div class="card" data-award="gold" data-pattern="participation" data-dept="creative-strategy">
+  <div class="badges"><span class="card-award award-gold">Gold</span><span class="dept-badge">Creative Strategy</span></div>
+  <div class="card-title">R/eal Reviews</div>
+  <div class="card-brand">Dove · DAVID London</div>
+  <span class="pattern-tag p-participation">🤝 参加設計</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">Amazonの低評価レビュー（「体が大きすぎる」「色が黒すぎる」等）を広告に転用。Dove製品を使いながら美の多様性を否定されてきた実際のユーザーの声を、ブランド最大の武器に変換。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">ネガティブなユーザー生成コンテンツをブランド戦略の核に組み込む逆転発想。Real Beautyの20年間の文脈があるからこそ成立する、高度に文脈依存型のアイデア。</div>
+</div>
+
+<div class="card" data-award="gold" data-pattern="system" data-dept="creative-strategy">
+  <div class="badges"><span class="card-award award-gold">Gold</span><span class="dept-badge">Creative Strategy</span></div>
+  <div class="card-title">One More Question</div>
+  <div class="card-brand">Lalcec（がん支援団体）· Grey Argentina, Buenos Aires</div>
+  <span class="pattern-tag p-system">🔧 システム・インフラ化</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">医師との診察時間が短い患者を対象に、「もう一つ聞いていいですか？」というフレーズを使うことで質問しやすくする行動変容プログラム。医療システム内の非対称性をコミュニケーションで解決。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">ツールでも広告でもなく「1フレーズ」が戦略核。医師と患者の権力差という構造的問題を、最小限の介入（言葉）で変える設計の洗練度が評価された。</div>
+</div>
+
+<div class="card" data-award="gold" data-pattern="tension" data-dept="creative-strategy">
+  <div class="badges"><span class="card-award award-gold">Gold</span><span class="dept-badge">Creative Strategy</span></div>
+  <div class="card-title">Protect the Peanut</div>
+  <div class="card-brand">M&M's · BBDO Chicago</div>
+  <span class="pattern-tag p-tension">⚔️ 矛盾・緊張の可視化</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">ピーナッツアレルギー規制強化の動きに対し、M&M'sが「ピーナッツを守る」キャンペーンを展開。自社の核原料を守ることが社会課題への関与と一致するという珍しい構造。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">ブランドの経済的利益と社会課題への取り組みが完全に一致しているため、CSRの偽善批判を受けない。「守りたいから守る」というシンプルな一貫性が強い。</div>
+</div>
+
+<div class="card" data-award="silver" data-pattern="tension" data-dept="creative-strategy">
+  <div class="badges"><span class="card-award award-silver">Silver</span><span class="dept-badge">Creative Strategy</span></div>
+  <div class="card-title">#UnCensorYourHealth</div>
+  <div class="card-brand">Ladywell · Saatchi & Saatchi, Los Angeles</div>
+  <span class="pattern-tag p-tension">⚔️ 矛盾・緊張の可視化</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">更年期・リビドー等の女性健康トピックがSNSアルゴリズムにセンサリングされる矛盾を告発。検閲される言葉をキャンペーンの核心に置き、プラットフォームの不公平を可視化。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">メディア環境の「敵」（検閲アルゴリズム）をキャンペーンの燃料に転換。語ること自体が抵抗運動になる設計で、ブランドの価値観と社会課題が完全一致。</div>
+</div>
+
+<div class="card" data-award="silver" data-pattern="system" data-dept="creative-strategy">
+  <div class="badges"><span class="card-award award-silver">Silver</span><span class="dept-badge">Creative Strategy</span></div>
+  <div class="card-title">ZIP Code Exam</div>
+  <div class="card-brand">Equality Health Foundation · Area 23, New York</div>
+  <span class="pattern-tag p-system">🔧 システム・インフラ化</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">患者の居住郵便番号が健康アウトカムを予測する最大の変数であることをデータで可視化。「住所を変えることが最良の健康保険」という医療の社会的決定因子を広告として提示。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">医療格差という複雑な問題を「郵便番号」という1つのデータポイントに凝縮。データが感情的洞察の触媒として機能した好例。</div>
+</div>
+
+<div class="card" data-award="silver" data-pattern="narrative" data-dept="creative-strategy">
+  <div class="badges"><span class="card-award award-silver">Silver</span><span class="dept-badge">Creative Strategy</span></div>
+  <div class="card-title">The Swedish Prescription</div>
+  <div class="card-brand">Visit Sweden · Prime Weber Shandwick, Stockholm</div>
+  <span class="pattern-tag p-narrative">📖 物語・感情の直撃</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">スウェーデンの医師が「自然の中で過ごすこと」を正式処方箋として発行できる制度を活用し、観光促進とウェルネスを接続。「スウェーデン訪問＝医療的処置」という新カテゴリーを創出。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">観光プロモーションを「ウェルネスの科学的証拠」にアップグレード。「行きたい」から「行くべき（医師が言っている）」への動機の質的転換が際立つ。</div>
+</div>
+
+<div class="card" data-award="silver" data-pattern="participation" data-dept="creative-strategy">
+  <div class="badges"><span class="card-award award-silver">Silver</span><span class="dept-badge">Creative Strategy</span></div>
+  <div class="card-title">Football Is for Food</div>
+  <div class="card-brand">Uber Eats · Special, Los Angeles</div>
+  <span class="pattern-tag p-participation">🤝 参加設計</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">「アメリカ人はフットボールを愛しているが、実際は試合中の食事のために観ている」という逆説的インサイトに基づく戦略。スーパーボウル施策（Build Your Own）と同じ大戦略の別角度。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">行動インサイト（試合より食事が目的）をブランドポジショニングに転換した大胆さ。「スポーツのお供」から「スポーツ観戦の主役」へのカテゴリー再定義。</div>
+</div>
+
+<div class="card" data-award="bronze" data-pattern="proof" data-dept="creative-strategy">
+  <div class="badges"><span class="card-award award-bronze">Bronze</span><span class="dept-badge">Creative Strategy</span></div>
+  <div class="card-title">Recipe for Change</div>
+  <div class="card-brand">Puck（Arla Foods）· FP7 McCann, Dubai</div>
+  <span class="pattern-tag p-proof">📊 主張の実証・証明</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">レバノン難民の母親たちの伝統レシピをUAE・サウジのレストランメニューに採用し、売上の50%を家族へ還元。「文化的遺産の保護」と「経済的支援」を料理で一体化した証明型プログラム。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">ブランド（乳製品）が使われる「料理」という場を、社会課題解決の実証実験にした設計。媒体が商品カテゴリーと完全一致している。</div>
+</div>
+
+<div class="card" data-award="bronze" data-pattern="hijack" data-dept="creative-strategy">
+  <div class="badges"><span class="card-award award-bronze">Bronze</span><span class="dept-badge">Creative Strategy</span></div>
+  <div class="card-title">Welcome Back, Paisano</div>
+  <div class="card-brand">Tecate（Heineken） · LePub Mexico City</div>
+  <span class="pattern-tag p-hijack">⚡ 文脈のハイジャック</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">メキシコ系移民がトランプ政権の強硬政策後に帰国した波を「ウェルカムバック」と祝うキャンペーン。政治的緊張を逆手に取り、ビールで帰国者と残留者の絆を再確認する場を設計。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">政治的センシティブネスをブランドが正面から扱い、「祝祭」に転換する度胸が評価。ローカルな文化的文脈の精度が高く、非メキシコ系ブランドには成立しない独自性。</div>
+</div>
+
+<div class="card" data-award="bronze" data-pattern="narrative" data-dept="creative-strategy">
+  <div class="badges"><span class="card-award award-bronze">Bronze</span><span class="dept-badge">Creative Strategy</span></div>
+  <div class="card-title">Preserved Promos</div>
+  <div class="card-brand">（食品ブランド）· VML New York</div>
+  <span class="pattern-tag p-narrative">📖 物語・感情の直撃</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">賞味期限切れ間近の食品を「限定品」として価値化し、廃棄問題と消費者の希少性バイアスを同時に活用。「期限切れ＝価値低下」という常識を逆転した価格プロモーション戦略。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">行動経済学（希少性効果）を正確に応用。食品廃棄という社会課題を「セール」の代わりに「プレミアム化」で解決するアプローチの独自性が評価。</div>
+</div>
+
+<!-- ===================== CREATIVE DATA ===================== -->
+
+<div class="card" data-award="gp" data-pattern="system" data-dept="creative-data">
+  <div class="badges"><span class="card-award award-gp">GP</span><span class="dept-badge">Creative Data</span></div>
+  <div class="card-title">SOS POS</div>
+  <div class="card-brand">BCP Bank · Circus Grey, Lima</div>
+  <span class="pattern-tag p-system">🔧 システム・インフラ化</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">ペルーで1日4000件の携帯盗難→銀行口座不正引き出しという課題に対し、既存POS端末を緊急口座凍結窓口として再活用するシステムを構築。データが問題を発見し、データインフラが解決策を提供。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">新投資ゼロで既存ネットワークを再活用する合理性。「データからアイデアが生まれる」というCreative Dataの定義を体現した最純粋な事例。Innovation BronzeとMedia Goldも受賞。</div>
+</div>
+
+<div class="card" data-award="gold" data-pattern="system" data-dept="creative-data">
+  <div class="badges"><span class="card-award award-gold">Gold</span><span class="dept-badge">Creative Data</span></div>
+  <div class="card-title">CeraVe – The New Face of Legs</div>
+  <div class="card-brand">CeraVe (L'Oréal) · Beauty Co-Lab + Bolded, New York</div>
+  <span class="pattern-tag p-system">🔧 システム・インフラ化</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">NBA選手Kevin Durantが「脚の乾燥肌」問題を公言→スポーツデータと皮膚科データを組み合わせ、「アスリートの足」という未開拓セグメントを発見・ターゲット化。スポーツと皮膚科学の交差点をデータで見つけた。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">データが「カテゴリー拡張」の根拠として機能。ビューティー×スポーツという意外な交差点を数字で証明し、セレブリティ起用に科学的正当性を与えた設計。</div>
+</div>
+
+<div class="card" data-award="silver" data-pattern="participation" data-dept="creative-data">
+  <div class="badges"><span class="card-award award-silver">Silver</span><span class="dept-badge">Creative Data</span></div>
+  <div class="card-title">Lucky Fan Index（Creative Data Silver）</div>
+  <div class="card-brand">Wisła Kraków FC · VML Warsaw</div>
+  <span class="pattern-tag p-participation">🤝 参加設計</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">試合中のスポーツデータをAIがリアルタイム処理し、ファン個人の「幸運度スコア」を算出→スコアのピーク時に限定オファーを提供するシステム（Creative Commerce GPも受賞）。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">データを「分析ツール」でなく「感情エンジン」として活用。ファンの感情ピークに商業行為を差し込む精緻なタイミング設計がCreative DataとCreative Commerceの両部門で評価。</div>
+</div>
+
+<div class="card" data-award="silver" data-pattern="participation" data-dept="creative-data">
+  <div class="badges"><span class="card-award award-silver">Silver</span><span class="dept-badge">Creative Data</span></div>
+  <div class="card-title">Mandatory Vacation Packages</div>
+  <div class="card-brand">Camara Colombiana de Comercio Electronico · Name, Bogota</div>
+  <span class="pattern-tag p-participation">🤝 参加設計</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">コロンビアのe-コマース推進団体が、「ショッピングデータが示す"あなたが本当に欲しいもの"に基づく旅行パッケージ」を自動生成するシステムを構築。購買履歴を旅行体験に変換。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">ファーストパーティデータの最も創造的な使用例の一つ。消費者が気づいていない自分の欲望をデータが代弁する「パーソナライゼーションのアート」。</div>
+</div>
+
+<div class="card" data-award="bronze" data-pattern="narrative" data-dept="creative-data">
+  <div class="badges"><span class="card-award award-bronze">Bronze</span><span class="dept-badge">Creative Data</span></div>
+  <div class="card-title">The Philipstown Wirecar</div>
+  <div class="card-brand">Philipstown Wirecar Foundation · Accenture Song, Cape Town</div>
+  <span class="pattern-tag p-narrative">📖 物語・感情の直撃</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">南アフリカの子供たちが作る伝統的な「針金車」の制作データとGPSを組み合わせ、遊びの中に潜む「交通事故リスクパターン」を可視化。子供の遊びがインフラ改善のデータソースになる仕組み。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">文化的工芸品（針金車）をデータ収集ツールに変換する発想の飛躍が秀逸。「遊びがインサイト」という感情的フックにデータが乗っている構造。</div>
+</div>
+
+<div class="card" data-award="bronze" data-pattern="system" data-dept="creative-data">
+  <div class="badges"><span class="card-award award-bronze">Bronze</span><span class="dept-badge">Creative Data</span></div>
+  <div class="card-title">Cancer Prevention Discounts</div>
+  <div class="card-brand">Broadfork Produce · Tank Worldwide, Montreal</div>
+  <span class="pattern-tag p-system">🔧 システム・インフラ化</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">野菜の購入データを分析し、がん予防効果が高い食品を多く買う顧客に段階的割引を適用するロイヤルティプログラムを構築。「健康的な購買行動＝安くなる」という正のフィードバックループ。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">消費データが健康行動を誘導するインセンティブ設計に直結。予防医療とリテールメディアの交差点として、新しいデータ活用の形を提示。</div>
+</div>
+
+<div class="card" data-award="bronze" data-pattern="hijack" data-dept="creative-data">
+  <div class="badges"><span class="card-award award-bronze">Bronze</span><span class="dept-badge">Creative Data</span></div>
+  <div class="card-title">CIF Clean My Name</div>
+  <div class="card-brand">CIF（Unilever）· Droga5, Part of Accenture Song, São Paulo</div>
+  <span class="pattern-tag p-hijack">⚡ 文脈のハイジャック</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">「Clean」という単語を含む汚名（ニックネームや批判的タグ）を検索エンジンで検出→CIFが「その名前をクリーンにする」というSEOキャンペーンを展開。検索データが広告のトリガー。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">製品名（清潔）と検索行動（名誉毀損のキーワード）を創造的に接続。SEO＝実用ツールという常識を感情的な消費者体験へ昇華。</div>
+</div>
+
+<!-- ===================== CREATIVE B2B ===================== -->
+
+<div class="card" data-award="gp" data-pattern="system" data-dept="creative-b2b">
+  <div class="badges"><span class="card-award award-gp">GP</span><span class="dept-badge">Creative B2B</span></div>
+  <div class="card-title">The Faroe Islands Space Program</div>
+  <div class="card-brand">SKF · NORD, Stockholm</div>
+  <span class="pattern-tag p-system">🔧 システム・インフラ化</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">宇宙開発競争に対し「月の引力は地球で使える」と逆張り。フェロー諸島の潮力発電プロジェクト（自社ベアリング使用）を実際に稼働させ、仕様書ベースのB2Bコミュニケーションを「本物の宇宙プログラム級の物語」に変換。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">「実際に動いている」という事実の重みがすべての広告コピーを超える。B2Bが創造的勇気を持つことで差別化できることを示した先例。</div>
+</div>
+
+<div class="card" data-award="gold" data-pattern="participation" data-dept="creative-b2b">
+  <div class="badges"><span class="card-award award-gold">Gold</span><span class="dept-badge">Creative B2B</span></div>
+  <div class="card-title">Soil Stay</div>
+  <div class="card-brand">Tra Mongkut Fertilizer · VML Bangkok</div>
+  <span class="pattern-tag p-participation">🤝 参加設計</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">農家が土壌サンプルを送ると、そのデータに基づいた肥料提案と「モデル農場での農業体験ステイ」が得られるプログラム。土壌分析という無機的なB2Bサービスに「Airbnb for agriculture」の体験設計を導入。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">B2B購買における「信頼構築」を、データではなく体験によって解決した発想の転換。サービス体験が最強のセールスツールになることを示した。VMLバンコクの初受賞作品。</div>
+</div>
+
+<div class="card" data-award="silver" data-pattern="participation" data-dept="creative-b2b">
+  <div class="badges"><span class="card-award award-silver">Silver</span><span class="dept-badge">Creative B2B</span></div>
+  <div class="card-title">Vaseline Originals</div>
+  <div class="card-brand">Vaseline · Ogilvy Singapore</div>
+  <span class="pattern-tag p-participation">🤝 参加設計</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">ソーシャルメディア上でファンが自発的に発明した「Vaselineハック」を製品化し、オリジナルのクリエイターに印税を支払うモデル。「インフルエンサーマーケティング」を超えた「クリエイターとの共同製造」。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">Vaselineジェリーの466%売上増を達成。消費者の創造性を製品開発の上流に組み込む構造が、B2B（ブランド×クリエイター関係）と消費者向け施策の両方で評価された。</div>
+</div>
+
+<div class="card" data-award="silver" data-pattern="subvert" data-dept="creative-b2b">
+  <div class="badges"><span class="card-award award-silver">Silver</span><span class="dept-badge">Creative B2B</span></div>
+  <div class="card-title">Keep Thinking（Claude）</div>
+  <div class="card-brand">Claude (Anthropic) · Mother, London</div>
+  <span class="pattern-tag p-subvert">🔄 常識の転覆</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">AIツールの「即答・効率化」という業界常識に逆らい、「考え続けることを止めないで」というメッセージを核としたB2B向けブランドコミュニケーション。AI Craft in B2B部門でも認定。</div>
+  <div class="lbl">なぜ效いたか</div>
+  <div class="txt-muted">競合が「速さ・正確さ」を訴求する中で「思考を深めること」という逆張りポジション。Film Grand Prix（広告主向け）とB2B（企業向け）で一貫したブランド哲学が機能した。</div>
+</div>
+
+<div class="card" data-award="silver" data-pattern="system" data-dept="creative-b2b">
+  <div class="badges"><span class="card-award award-silver">Silver</span><span class="dept-badge">Creative B2B</span></div>
+  <div class="card-title">Spots for Shops</div>
+  <div class="card-brand">Parkin（駐車場会社）· FP7 McCann, Dubai</div>
+  <span class="pattern-tag p-system">🔧 システム・インフラ化</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">ドバイの駐車場運営会社が「近隣の小売店での購入を駐車料金割引に変換できるアプリ」を構築。駐車という日常行動が小売エコシステム全体を活性化するインフラに。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">駐車＝単なるインフラから「地域経済を動かすプラットフォーム」への再定義。B2B（小売店×駐車場運営）とB2C（ドライバー）を同時に価値設計した稀有な構造。</div>
+</div>
+
+<div class="card" data-award="bronze" data-pattern="subvert" data-dept="creative-b2b">
+  <div class="badges"><span class="card-award award-bronze">Bronze</span><span class="dept-badge">Creative B2B</span></div>
+  <div class="card-title">T-Rex Leather（B2B Bronze）</div>
+  <div class="card-brand">Lab-Grown Leather · VML Paris</div>
+  <span class="pattern-tag p-subvert">🔄 常識の転覆</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">ティラノサウルスのDNAから培養した恐竜レザー製バッグをPR展開。「動物を殺さない皮革」という倫理的価値をB2Bバイヤー（ファッション・素材業界）に向けて最もセンセーショナルな形で提示。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">Innovation Bronze・PR Goldと同一施策がB2B部門でも評価。カテゴリーの認知拡大と業界バイヤーへの価値証明を同時に達成した多部門型アイデアの典型。</div>
+</div>
+
+<div class="card" data-award="bronze" data-pattern="hijack" data-dept="creative-b2b">
+  <div class="badges"><span class="card-award award-bronze">Bronze</span><span class="dept-badge">Creative B2B</span></div>
+  <div class="card-title">IKEA ALSULAIMAN</div>
+  <div class="card-brand">IKEA · MEMAC Ogilvy, Dubai</div>
+  <span class="pattern-tag p-hijack">⚡ 文脈のハイジャック</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">サウジアラビアの地場大手家具チェーン「Alsulaimain」が自社IKEAをリブランドした際、IKEAがその現地化プロセス自体をB2B向けケーススタディとして積極公開。競合の動きを自社のプロモーションに変換。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">通常は「見えない」フランチャイズ契約の実態をコンテンツ化。潜在的パートナー企業に対し「IKEAと組むとどうなるか」を実例で証明するB2Bブランド戦略。</div>
+</div>
+
+<!-- ===================== CREATIVE BUSINESS TRANSFORMATION ===================== -->
+
+<div class="card" data-award="gp" data-pattern="tension" data-dept="creative-business">
+  <div class="badges"><span class="card-award award-gp">GP</span><span class="dept-badge">Creative Business Transformation</span></div>
+  <div class="card-title">The Wedding Rice</div>
+  <div class="card-brand">Wikifarmer · McCann Athens</div>
+  <span class="pattern-tag p-tension">⚔️ 矛盾・緊張の可視化</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">規格外米の廃棄問題 × 結婚式で投げる米の需要という2つの問題を1つのビジネスモデルで解決。農家が「食べられない米」を直接ウェディングプランナーに販売できるマーケットプレイスを構築。ギリシャ初のGrand Prix。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">文化的慣習（結婚式の米）をサプライチェーン問題の解決に転用。新インフラ不要・追加投資ゼロという「ディスアーミングなシンプルさ」が評価基準そのものだった。</div>
+</div>
+
+<div class="card" data-award="gold" data-pattern="proof" data-dept="creative-business">
+  <div class="badges"><span class="card-award award-gold">Gold</span><span class="dept-badge">Creative Business Transformation</span></div>
+  <div class="card-title">Protect the Peanut（Business Transformation Gold）</div>
+  <div class="card-brand">M&M's · BBDO Chicago</div>
+  <span class="pattern-tag p-proof">📊 主張の実証・証明</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">ピーナッツアレルギー規制が強化される中でM&M'sが「ピーナッツを守る」ロビー活動と啓発キャンペーンを同時展開。ビジネス防衛（原材料確保）と消費者コミュニケーションを一体化した変革。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">「企業の利益を守る」行動が「消費者への価値提供」と完全に一致するため、真摯さが際立つ。Creative Strategy Gold（同作品）とあわせて戦略の一貫性が評価。</div>
+</div>
+
+<div class="card" data-award="silver" data-pattern="participation" data-dept="creative-business">
+  <div class="badges"><span class="card-award award-silver">Silver</span><span class="dept-badge">Creative Business Transformation</span></div>
+  <div class="card-title">Build Your Own Super Bowl Commercial（Transformation Silver）</div>
+  <div class="card-brand">Uber Eats · Special Australia + US</div>
+  <span class="pattern-tag p-participation">🤝 参加設計</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">スーパーボウル広告をユーザーがアプリ内で自分専用に編集できる仕掛けを提供し、メディア購入（CM）とアプリ体験を融合させたビジネス変革。参加がそのまま購買に直結するモデル（Media GPも受賞）。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">広告を「視聴するもの」から「作るもの→買うもの」に転換するビジネスモデル変革。参加型コマースの構造的先例として評価。</div>
+</div>
+
+<div class="card" data-award="silver" data-pattern="system" data-dept="creative-business">
+  <div class="badges"><span class="card-award award-silver">Silver</span><span class="dept-badge">Creative Business Transformation</span></div>
+  <div class="card-title">Haven（Transformation Silver）</div>
+  <div class="card-brand">Suncorp Insurance · Leo Australia</div>
+  <span class="pattern-tag p-system">🔧 システム・インフラ化</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">Titanium GPと同一施策のCreative Business Transformation受賞。保険補償ビジネスから「防災プラットフォームビジネス」へのビジネスモデル変革として評価された側面。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">同一作品がTitanium（ゲームチェンジング性）とBusiness Transformation（事業変革性）で評価されることは、アイデアが複数の評価軸を同時に満たすことを証明。</div>
+</div>
+
+<div class="card" data-award="bronze" data-pattern="system" data-dept="creative-business">
+  <div class="badges"><span class="card-award award-bronze">Bronze</span><span class="dept-badge">Creative Business Transformation</span></div>
+  <div class="card-title">Spots for Shops（Transformation Bronze）</div>
+  <div class="card-brand">Parkin · FP7 McCann, Dubai</div>
+  <span class="pattern-tag p-system">🔧 システム・インフラ化</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">Creative B2B SilverのParkin「Spots for Shops」のビジネス変革側面を評価。駐車場運営会社が「都市の商業エコシステムを活性化するプラットフォーム企業」に変容した。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">B2Bと Business Transformation の両部門受賞が示すように、インフラ企業のビジネスモデル転換がクリエイティブによって加速した典型例。</div>
+</div>
+
+<div class="card" data-award="bronze" data-pattern="participation" data-dept="creative-business">
+  <div class="badges"><span class="card-award award-bronze">Bronze</span><span class="dept-badge">Creative Business Transformation</span></div>
+  <div class="card-title">Vaseline Originals（Transformation Bronze）</div>
+  <div class="card-brand">Vaseline · Ogilvy Singapore</div>
+  <span class="pattern-tag p-participation">🤝 参加設計</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">Creative B2B Silverと同一施策のBusiness Transformation受賞。「消費者発のイノベーション→製品化→印税付与」という新しい製品開発モデルとしてビジネス変革を評価。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">クリエイターエコノミーをブランドの製品開発上流に組み込む構造が、B2BとBusiness Transformationの両方の審査基準に合致した。</div>
+</div>
+
+<!-- ===================== OTHER GRAND PRIX (既存カード) ===================== -->
+
+<div class="card" data-award="gp" data-pattern="subvert" data-dept="other">
+  <div class="badges"><span class="card-award award-gp">GP</span><span class="dept-badge">Film</span></div>
+  <div class="card-title">Can I Get a Six Pack? / How Can I Communicate With My Mom?</div>
+  <div class="card-brand">Claude (Anthropic) · Mother London</div>
+  <span class="pattern-tag p-subvert">🔄 常識の転覆</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">「AIが広告に反対するCM」をスーパーボウルで放映。競合（OpenAI）の広告導入発表を逆手に取り、「ここには広告が来ない」と宣言するコーポレートエイキドー。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">制約（広告なし）を差別化（信頼）に転換する逆転の発想。タイミング・トーン・ターゲットの三重一致が「最も重要な技術競争」での印象刷新を達成。</div>
+</div>
+
+<div class="card" data-award="gp" data-pattern="hijack" data-dept="other">
+  <div class="badges"><span class="card-award award-gp">GP</span><span class="dept-badge">Outdoor</span></div>
+  <div class="card-title">Field Barcode</div>
+  <div class="card-brand">Mercado Livre · GUT São Paulo</div>
+  <span class="pattern-tag p-hijack">⚡ 文脈のハイジャック</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">スタジアムの芝刈りパターンで104m幅のバーコードを作成。試合中にスキャンすると25%オフクーポンを獲得。スタジアム全体をインタラクティブOOHメディアに変換。</div>
+  <div class="lbl">なぜ效いたか</div>
+  <div class="txt-muted">スポーツ観戦という高エンゲージメントな場の文脈を完全に利用。リアルとデジタルを購買直結で接続した「屋外広告の定義拡張」。</div>
+</div>
+
+<div class="card" data-award="gp" data-pattern="subvert" data-dept="other">
+  <div class="badges"><span class="card-award award-gp">GP</span><span class="dept-badge">PR</span></div>
+  <div class="card-title">The KitKat Heist</div>
+  <div class="card-brand">KitKat · VML London + Burson</div>
+  <span class="pattern-tag p-subvert">🔄 常識の転覆</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">40万本盗難→隠蔽せず公開し「KitKatトラッカー」でユーザーに真偽判定させる。クライシスPRの常識（謝罪・沈黙）を完全に逆転し危機を文化現象に転換。</div>
+  <div class="lbl">なぜ效いたか</div>
+  <div class="txt-muted">220億円相当アーンドメディア・220万人参加を10日で達成。「リスクを取ること」がブランドの遊び心と誠実さを同時に証明した好例。</div>
+</div>
+
+<div class="card" data-award="gp" data-pattern="participation" data-dept="other">
+  <div class="badges"><span class="card-award award-gp">GP</span><span class="dept-badge">Media</span></div>
+  <div class="card-title">Build Your Own Super Bowl Commercial</div>
+  <div class="card-brand">Uber Eats · Special Australia + US</div>
+  <span class="pattern-tag p-participation">🤝 参加設計</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">スーパーボウルCMをユーザーがアプリ内で自分専用に編集できる仕掛け。1000通り以上の編集バリエーションを生成し、参加行動がそのまま購買に直結。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">メディア購入（広告）とプロダクト体験（アプリ）の完全統合。参加が購買に直結する「参加型コマース」の最前線。過去最高スーパーボウル売上を記録。</div>
+</div>
+
+<div class="card" data-award="gp" data-pattern="hijack" data-dept="other">
+  <div class="badges"><span class="card-award award-gp">GP</span><span class="dept-badge">Social &amp; Creator</span></div>
+  <div class="card-title">Could Have Been a Heineken</div>
+  <div class="card-brand">Heineken · LePub Milan</div>
+  <span class="pattern-tag p-hijack">⚡ 文脈のハイジャック</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">3分以上のWhatsApp音声メモをボットに転送するとバーで無料ビールに交換。デジタルの非効率（長音声メモ）を「リアルで会って話す」というブランド価値観へのハンドオフに変換。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">280時間の音声メモをビールに変換した「行動が商品になる」設計。Creative Strategy・Social Creatorにまたがる統一したブランド哲学の体現。</div>
+</div>
+
+<div class="card" data-award="gp" data-pattern="hijack" data-dept="other">
+  <div class="badges"><span class="card-award award-gp">GP</span><span class="dept-badge">Direct</span></div>
+  <div class="card-title">Uva Uva Bombón</div>
+  <div class="card-brand">Uva App · De La Cruz Ogilvy, San Juan</div>
+  <span class="pattern-tag p-hijack">⚡ 文脈のハイジャック</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">Bad Bunnyの楽曲にブランド名が登場する可能性に注目し、ファンを動員して言及を促す。実際にスーパーボウルで言及→全商品1ドル→売り切れ・新規ユーザー70.9%増。</div>
+  <div class="lbl">なぜ效いたか</div>
+  <div class="txt-muted">「コントロールを手放す」勇気が逆に信頼を生む。ファン文化の自律的な動きをキャンペーンのエンジンにした参加設計×ハイジャックの完成形。</div>
+</div>
+
+<div class="card" data-award="gp" data-pattern="inversion" data-dept="other">
+  <div class="badges"><span class="card-award award-gp">GP</span><span class="dept-badge">Audio &amp; Radio</span></div>
+  <div class="card-title">Coquí Alarmed</div>
+  <div class="card-brand">Hyundai Puerto Rico · BBDO Puerto Rico</div>
+  <span class="pattern-tag p-inversion">🔃 視点の反転</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">レンタカーの警報音を固有種カエル「コキー」の鳴き声に置き換え。「うるさい」と思われていた鳴き声を「聞きたい音」に転換し、観光促進と種保護を同時達成。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">ネガティブ体験を文化的誇りへ逆転させる発想のシンプルさ。ローカル文化インサイトをタッチポイント設計に直接埋め込む完璧な構造。</div>
+</div>
+
+<div class="card" data-award="gp" data-pattern="system" data-dept="other">
+  <div class="badges"><span class="card-award award-gp">GP</span><span class="dept-badge">Creative Effectiveness</span></div>
+  <div class="card-title">Three Words — "and domestic violence"</div>
+  <div class="card-brand">AXA France · Publicis Conseil, Paris</div>
+  <span class="pattern-tag p-system">🔧 システム・インフラ化</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">保険約款に「家庭内暴力（DV）被害者」を補償対象として追加する3語を挿入。制度変更そのものが広告になった。2025年GPの継続案件で今年はEffectiveness GPを獲得。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">「3語の変更」という極度のシンプルさと社会的インパクトのギャップが圧倒的。クリエイティビティが制度設計として機能した最良の事例。</div>
+</div>
+
+<div class="card" data-award="gp" data-pattern="inversion" data-dept="other">
+  <div class="badges"><span class="card-award award-gp">GP</span><span class="dept-badge">Print &amp; Publishing</span></div>
+  <div class="card-title">Look Familiar?</div>
+  <div class="card-brand">Heinz Ketchup · Rethink, Toronto</div>
+  <span class="pattern-tag p-inversion">🔃 視点の反転</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">他社ソースが写った飲食店の写真を広告に使用。競合が模倣したことを「本物の証明」として逆用。製品すら登場しない広告。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">「模倣されること」をブランド力の最上位指標として再定義。数十年の資産への絶対的信頼が裏付けで、コピーは一切不要という余裕が際立つ。</div>
+</div>
+
+<div class="card" data-award="gp" data-pattern="participation" data-dept="other">
+  <div class="badges"><span class="card-award award-gp">GP</span><span class="dept-badge">Grand Prix for Good</span></div>
+  <div class="card-title">600K Network</div>
+  <div class="card-brand">Comando Con Venezuela · Rainbow Lobster, Mexico City</div>
+  <span class="pattern-tag p-participation">🤝 参加設計</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">ベネズエラ大統領選挙の不正を防ぐため、市民60万人をQRコードで分散型選挙監視ネットワークとして組織化。市民一人ひとりが監視員になる参加型民主主義インフラ。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">テクノロジーが市民の力を組織化する最もプリミティブで本質的な使い方。「広告/クリエイティブが社会を変える」の最極端事例。Titanium GPも同時受賞。</div>
+</div>
+
+<div class="card" data-award="gp" data-pattern="proof" data-dept="other">
+  <div class="badges"><span class="card-award award-gp">GP</span><span class="dept-badge">Creative Brand（新設）</span></div>
+  <div class="card-title">AB InBev: Creativity at Scale</div>
+  <div class="card-brand">AB InBev · Anheuser-Busch InBev, Leuven</div>
+  <span class="pattern-tag p-proof">📊 主張の実証・証明</span>
+  <div class="lbl">アイデア構造</div>
+  <div class="txt">「クリエイティビティを組織能力として制度化できる」という命題を数値（離職率改善・売上成長・Effie世界1位連続）で証明。エージェンシーなしで自社が直接エントリーした新設部門初のGP。</div>
+  <div class="lbl">なぜ効いたか</div>
+  <div class="txt-muted">「作品」でなく「仕組み」を評価する部門にプロセスとカルチャーを「クリエイティブ」として提出。前例のない応募形態が部門の定義そのものと完全一致。</div>
+</div>
+
+  </div><!-- /cards-grid -->
+
+  <hr>
+
+  <div class="section-label">パターンを横断した傾向インサイト</div>
+  <div class="insight-grid">
+    <div class="insight-card">
+      <div class="insight-head">6部門共通：「動かす」より「変える」</div>
+      <div class="insight-body">Creative Strategy・B2B・Business Transformationの受賞作に共通するのは、コミュニケーションを超えてビジネスモデル・制度・インフラ自体を変えていること。「広告の効果」より「変化の証拠」が評価軸に。</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-head">Creative DataはAIより「既存インフラ再利用」が強い</div>
+      <div class="insight-body">GPのSOS POSも他の受賞作も、新技術より「すでにあるデータと仕組みを創造的に結合する」発想が評価された。データはアイデアの起点であり証明であるという位置づけ。</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-head">B2BでもB2Cと同じパターンが通用する</div>
+      <div class="insight-body">SKF（物語×実証）、Soil Stay（体験設計）、Vaseline Originals（参加設計）は、いずれもB2Cと同じクリエイティブ文法がB2Bでも機能することを証明した。「B2Bは理性訴求」という常識は崩壊しつつある。</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-head">Innovationは「動く証拠」が必要</div>
+      <div class="insight-body">「Proof of Concept → Proof of Change」という審査基準のもと、GPのSupernova Adaptiveも他の受賞作も「実際に社会や生活が変わった証拠」を提出しなければ評価されない時代に。</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-head">Titaniumは複数部門での受賞が前提</div>
+      <div class="insight-body">Titanium受賞作はいずれも他部門でも高評価（Haven＝Business Transformation Silver、Oreo Cows＝Direct/BEA Gold、Expedition Impossible＝BEA GP）。1つの部門では「ゲームチェンジング」と見なされない時代。</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-head">Creative Strategy：「戦略が武器になる」時代</div>
+      <div class="insight-body">Heineken Pub（文化への投資）、Dove R/eal Reviews（ネガティブの転用）、ZIP Code Exam（データが感情になる）に共通するのは、インサイトから戦略核を作り、それを最小限の表現で実装する構造の洗練度。</div>
+    </div>
+  </div>
+
+  <div class="footer" style="margin-top:2rem;">Cannes Lions 2026 Award Decon Dashboard v2 · 特集6部門完全網羅 + 全Grand Prix · データソース: Cannes Lions公式, Brand Innovators, Campaign Brief, LBBOnline, Creative Review, The Drum, Branding in Asia, adobomagazine, VML, Ogilvy, PRovoke Media</div>
+
+</main>
+
+<script>
+var works=[];var activePatterns=new Set();var activeAward='all';var activeDept='all';
+function init(){
+  works=Array.from(document.querySelectorAll('.card'));
+  var pc={};
+  works.forEach(function(c){var p=c.getAttribute('data-pattern');pc[p]=(pc[p]||0)+1;});
+  var total=works.length;
+  Object.keys(pc).forEach(function(p){
+    var e=document.getElementById('cnt-'+p);
+    var b=document.getElementById('bar-'+p);
+    if(e)e.textContent=pc[p];
+    if(b)b.style.width=Math.round(pc[p]/total*100)+'%';
+  });
+  updateCount();
+}
+function togglePattern(p,chip){
+  if(activePatterns.has(p)){activePatterns.delete(p);chip.classList.remove('selected');}
+  else{activePatterns.add(p);chip.classList.add('selected');}
+  applyFilters();
+}
+function filterAward(award,btn){
+  document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  activeAward=award;
+  applyFilters();
+}
+function filterDept(dept,btn){
+  document.querySelectorAll('.dept-btn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  activeDept=dept;
+  applyFilters();
+}
+function applyFilters(){
+  var v=0;
+  works.forEach(function(c){
+    var award=c.getAttribute('data-award');
+    var pattern=c.getAttribute('data-pattern');
+    var dept=c.getAttribute('data-dept');
+    var aok=activeAward==='all'||award===activeAward;
+    var pok=activePatterns.size===0||activePatterns.has(pattern);
+    var dok=activeDept==='all'||dept===activeDept;
+    var show=aok&&pok&&dok;
+    c.classList.toggle('hidden',!show);
+    if(show)v++;
+  });
+  updateCount(v);
+}
+function updateCount(n){
+  var cnt=(n!==undefined)?n:works.length;
+  document.getElementById('result-count').textContent=cnt+' 件表示中';
+}
+window.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>
